@@ -9,6 +9,7 @@ public class User {
     private String lastName;
     private String email;
     private LocalDate birthDate;
+    private String password;
 
     public User(String nickname, String name, String lastName, String email, LocalDate birthDate) {
         setNickname(nickname);

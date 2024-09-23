@@ -78,4 +78,16 @@ class UserTest {
         assertEquals(user.getBirthDate(), userBirthDate);
     }
 
+    @Test
+    void setPassword() {
+        user.setPassword("password");
+        assertTrue(user.isPasswordValid("password"));
+    }
+
+    @Test
+    void getPassword() {
+        user.setPassword("password");
+        assertEquals(user.getPassword(), "password");
+    }
+
 }
