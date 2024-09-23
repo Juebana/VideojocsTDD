@@ -14,7 +14,7 @@ class VideogameTest {
     @BeforeEach
     void setUp() {
         videogame = new Videogame(gameName);
-        user = new User("testUser", "John", "Doe", "john.doe@example.com", LocalDate.of(1990, 1, 1));
+        user = new User("testUser", "John", "Doe", "john.doe@example.com", LocalDate.of(1990, 1, 1), "password");
     }
 
     @Test
@@ -133,8 +133,8 @@ class VideogameTest {
 
     @Test
     void getUsersWhoHaveConsulted() {
-        User user1 = new User("user1", "Alice", "Smith", "alice.smith@example.com", LocalDate.of(1995, 5, 10));
-        User user2 = new User("user2", "Bob", "Jones", "bob.jones@example.com", LocalDate.of(1988, 3, 20));
+        User user1 = new User("user1", "Alice", "Smith", "alice.smith@example.com", LocalDate.of(1995, 5, 10), "password");
+        User user2 = new User("user2", "Bob", "Jones", "bob.jones@example.com", LocalDate.of(1988, 3, 20), "password");
         videogame.addUsersWhoHaveConsulted(user1);
         videogame.addUsersWhoHaveConsulted(user2);
 

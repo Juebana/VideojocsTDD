@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.function.BooleanSupplier;
 
 public class User {
     private final int id;

@@ -13,7 +13,7 @@ class VideogamesLibraryTest {
     @BeforeEach
     void setUp() {
         videogamesLibrary = new VideogamesLibrary();
-        user = new User("testUser", "John", "Doe", "john.doe@example.com", LocalDate.of(1990, 1, 1));
+        user = new User("testUser", "John", "Doe", "john.doe@example.com", LocalDate.of(1990, 1, 1), "password");
     }
 
     @Test
