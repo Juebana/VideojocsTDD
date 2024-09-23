@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.function.BooleanSupplier;
 
 public class User {
     private final int id;
@@ -11,7 +12,7 @@ public class User {
     private LocalDate birthDate;
     private String password;
 
-    public User(String nickname, String name, String lastName, String email, LocalDate birthDate) {
+    public User(String nickname, String name, String lastName, String email, LocalDate birthDate, String password) {
         setNickname(nickname);
         lastId = 0;
         lastId++;
@@ -20,6 +21,7 @@ public class User {
         setLastName(lastName);
         setEmail(email);
         setBirthDate(birthDate);
+        setPassword(password);
     }
 
     public int getId() {
@@ -68,6 +70,22 @@ public class User {
 
     public LocalDate getBirthDate() {
         return this.birthDate;
+    }
+
+    public void setPassword(String string) {
+        this.password = string;
+    }
+
+    public Boolean isPasswordValid(String string) {
+        if (string == this.password) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Object getPassword() {
+        return this.password;
     }
     
 }
