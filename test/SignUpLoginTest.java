@@ -22,5 +22,7 @@ public class SignUpLoginTest {
     void signUp() {
         SignUpLogin signUpLogin = new SignUpLogin();
         signUpLogin.signUp(user);
+        assertEquals(user.getNickname(), signUpLogin.getSignUpUsername());
+        assertEquals(user.getPassword(), signUpLogin.getSignUpPassword());
     }
 }
