@@ -1,5 +1,7 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 public class VideogamesLibrary {
     private Set<Videogame> videogames;
@@ -17,14 +19,30 @@ public class VideogamesLibrary {
         return videogameFound;
     }
 
-    public Videogame find(String nomDelVideojoc) {
+    public Videogame find(String videogameName) {
         Videogame videogameFound = null;
         for (Videogame videogame : videogames) {
-            if (videogame.getName().equals(nomDelVideojoc)) {
+            if (videogame.getName().equals(videogameName)) {
                 videogameFound = videogame;
             }
         }
         return videogameFound;
+    }
+
+    public List<Videogame> searchVideogames(String genre, String platform, float minPrice, float maxPrice) {
+        List<Videogame> filteredVideogames = new ArrayList<>();
+
+        for (Videogame videogame : videogames) {
+            boolean matchesGenre = genre == null || videogame.getGenre().equalsIgnoreCase(genre);
+            boolean matchesPlatform = platform == null || videogame.getPlatforms().contains(platform);
+            boolean matchesPrice = videogame.getPrice() >= minPrice && videogame.getPrice() <= maxPrice;
+
+            if (matchesGenre && matchesPlatform && matchesPrice) {
+                filteredVideogames.add(videogame);
+            }
+        }
+
+        return filteredVideogames;
     }
 
     private void createInitialVideogames() {
