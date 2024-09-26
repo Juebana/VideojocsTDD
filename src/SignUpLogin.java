@@ -1,30 +1,23 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignUpLogin {
-    private String signUpUsername;
-    private String signUpPassword;
 
-    public SignUpLogin(String username, String password) {
-        this.signUpUsername = username;
-        this.signUpPassword = password;
+    private static Map<String, String> registeredUsers = new HashMap<>();
+
+    public void signUp(String username, String password) {
+        registeredUsers.put(username, password);
     }
 
-    public String getSignUpUsername() {
-        return signUpUsername;
+    public boolean login(String username, String password) {
+        return registeredUsers.containsKey(username) && registeredUsers.get(username).equals(password);
     }
 
-    public void setSignUpUsername(String username) {
-        this.signUpUsername = username;
+    public static Map<String, String> getRegisteredUsers() {
+        return registeredUsers;
     }
 
-    public String getSignUpPassword() {
-        return signUpPassword;
-    }
-
-    public void setSignUpPassword(String password) {
-        this.signUpPassword = password;
-    }
-
-    public void signUp(User user) {
-        setSignUpUsername(user.getNickname());
-        setSignUpPassword(user.getPassword());
+    public static void setRegisteredUsers(Map<String, String> users) {
+        registeredUsers = users;
     }
 }
