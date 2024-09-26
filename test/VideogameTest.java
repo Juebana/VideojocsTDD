@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.Set;
 
 class VideogameTest {
@@ -156,5 +157,34 @@ class VideogameTest {
         videogame.setRequirements("Windows 10, 8GB RAM, GTX 970");
 
         videogame.showData(); 
+    }
+
+    @Test
+    public void testAddReview() {
+        videogame.addReview(user, "Amazing game!", 5);
+
+        List<Review> reviews = videogame.getReviews();
+        assertEquals(1, reviews.size());
+        assertEquals("Amazing game!", reviews.get(0).getComment());
+        assertEquals(5, reviews.get(0).getRating());
+    }
+
+    @Test
+    public void testAddMultipleReviews() {
+        videogame.addReview(user, "Amazing game!", 5);
+        User anotherUser = new User("anotherUser", "Another", "User", "another@test.com", LocalDate.now(), "password123");
+        videogame.addReview(anotherUser, "Not bad, but could be better.", 3);
+
+        List<Review> reviews = videogame.getReviews();
+        assertEquals(2, reviews.size());
+        assertEquals("Amazing game!", reviews.get(0).getComment());
+        assertEquals("Not bad, but could be better.", reviews.get(1).getComment());
+    }
+
+    @Test
+    public void testReviewRatingOutOfBounds() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            videogame.addReview(user, "This shouldn't work.", 6);
+        });
     }
 }
