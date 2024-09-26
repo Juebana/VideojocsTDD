@@ -1,66 +1,59 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.time.LocalDate;
 
 public class SignUpLoginTest {
 
-    User user;
-    static final String userNickname = "nickname";
-    static final String userPassword = "password";
+    private SignUpLogin signUpLogin;
 
     @BeforeEach
-    void setUp() {
-        user = new User(userNickname, "Username", "UserLastName", "user@email.com", LocalDate.of(1990, 1, 1), userPassword);
+    public void setUp() {
+        signUpLogin = new SignUpLogin();
+        SignUpLogin.setRegisteredUsers(new HashMap<>());
     }
 
     @Test
-    void getSignUpUsernameTest() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
-        assertEquals(userNickname, signUpLogin.getSignUpUsername());
+    public void testSignUpAndGetRegisteredUsers() {
+        signUpLogin.signUp("user1", "password1");
+        signUpLogin.signUp("user2", "password2");
+
+        Map<String, String> users = SignUpLogin.getRegisteredUsers();
+
+        assertEquals(2, users.size());
+        assertEquals("password1", users.get("user1"));
+        assertEquals("password2", users.get("user2"));
     }
 
     @Test
-    void setSignUpUsernameTest() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
-        signUpLogin.setSignUpUsername("newNickname");
-        assertEquals("newNickname", signUpLogin.getSignUpUsername());
+    public void testSetRegisteredUsers() {
+        Map<String, String> testUsers = new HashMap<>();
+        testUsers.put("newUser", "newPassword");
+
+        SignUpLogin.setRegisteredUsers(testUsers);
+
+        assertEquals("newPassword", SignUpLogin.getRegisteredUsers().get("newUser"));
     }
 
     @Test
-    void getSignUpPassword() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
-        assertEquals(userPassword, signUpLogin.getSignUpPassword());
+    public void testLoginSuccess() {
+        signUpLogin.signUp("validUser", "password123");
+
+        assertTrue(signUpLogin.login("validUser", "password123"));
     }
 
     @Test
-    void setSignUpPassword() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
-        signUpLogin.setSignUpPassword("newPassword");
-        assertEquals("newPassword", signUpLogin.getSignUpPassword());
+    public void testLoginFailInvalidPassword() {
+        signUpLogin.signUp("validUser", "password123");
+
+        assertFalse(signUpLogin.login("validUser", "wrongPassword"));
     }
 
     @Test
-    void signUp() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
-        signUpLogin.signUp(user);
-        assertEquals(user.getNickname(), signUpLogin.getSignUpUsername());
-        assertEquals(user.getPassword(), signUpLogin.getSignUpPassword());
-    }
-
-    @Test
-    void login() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
-        assertTrue(user.isPasswordValid(signUpLogin.getSignUpPassword()));   
-    }
-
-    @Test
-    void loginIncorrectPassword() {
-        SignUpLogin signUpLogin = new SignUpLogin(userNickname, "wrong password");
-        assertFalse(user.isPasswordValid(signUpLogin.getSignUpPassword()));
+    public void testLoginFailUserNotFound() {
+        assertFalse(signUpLogin.login("nonExistentUser", "somePassword"));
     }
 }
