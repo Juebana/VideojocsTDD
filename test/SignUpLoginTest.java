@@ -2,6 +2,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
@@ -48,5 +50,17 @@ public class SignUpLoginTest {
         signUpLogin.signUp(user);
         assertEquals(user.getNickname(), signUpLogin.getSignUpUsername());
         assertEquals(user.getPassword(), signUpLogin.getSignUpPassword());
+    }
+
+    @Test
+    void login() {
+        SignUpLogin signUpLogin = new SignUpLogin(userNickname, userPassword);
+        assertTrue(user.isPasswordValid(signUpLogin.getSignUpPassword()));   
+    }
+
+    @Test
+    void loginIncorrectPassword() {
+        SignUpLogin signUpLogin = new SignUpLogin(userNickname, "wrong password");
+        assertFalse(user.isPasswordValid(signUpLogin.getSignUpPassword()));
     }
 }
