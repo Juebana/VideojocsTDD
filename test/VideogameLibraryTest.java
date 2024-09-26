@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 
 import java.time.LocalDate;
 
@@ -45,5 +46,38 @@ class VideogamesLibraryTest {
     void videogamesLibraryInitialVideogames() {
         assertNotNull(videogamesLibrary.find(user, "Return to Monkey Island"));
         assertNotNull(videogamesLibrary.find(user, "Dummy name"));
+    }
+
+    @Test
+    public void testSearchByGenre() {
+        List<Videogame> results = videogamesLibrary.searchVideogames("Point and click", null, 0, Float.MAX_VALUE);
+        assertEquals(1, results.size());
+        assertEquals("Return to Monkey Island", results.get(0).getName());
+    }
+
+    @Test
+    public void testSearchByPlatform() {
+        List<Videogame> results = videogamesLibrary.searchVideogames(null, "Switch", 0, Float.MAX_VALUE);
+        assertEquals(1, results.size());
+        assertEquals("Return to Monkey Island", results.get(0).getName());
+    }
+
+    @Test
+    public void testSearchByPriceRange() {
+        List<Videogame> results = videogamesLibrary.searchVideogames(null, null, 20, 30);
+        assertEquals(1, results.size());
+        assertEquals("Return to Monkey Island", results.get(0).getName());
+    }
+
+    @Test
+    public void testSearchByGenreAndPlatform() {
+        List<Videogame> results = videogamesLibrary.searchVideogames("Point and click", "Switch", 0, Float.MAX_VALUE);
+        assertEquals(1, results.size());
+    }
+
+    @Test
+    public void testSearchNoMatches() {
+        List<Videogame> results = videogamesLibrary.searchVideogames("RPG", "PlayStation", 0, Float.MAX_VALUE);
+        assertTrue(results.isEmpty());
     }
 }
