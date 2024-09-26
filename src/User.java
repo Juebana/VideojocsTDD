@@ -83,7 +83,7 @@ public class User {
         }
     }
 
-    public Object getPassword() {
+    public String getPassword() {
         return this.password;
     }
     
