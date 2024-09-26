@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Videogame {
@@ -12,6 +14,8 @@ public class Videogame {
     private String specificContentPEGI;
     private String requirements;
 
+    private List<Review> reviews;
+
     private Set<User> usersWhoHaveConsulted;
 
     public Set<User> getUsersWhoHaveConsulted() {
@@ -20,6 +24,7 @@ public class Videogame {
 
     public Videogame(String name) {
         this.name = name;
+        reviews = new ArrayList<>();
         usersWhoHaveConsulted = new HashSet<>();
     }
 
@@ -112,5 +117,23 @@ public class Videogame {
 
     public void addUsersWhoHaveConsulted(User user) {
         usersWhoHaveConsulted.add(user);
+    }
+
+    public void addReview(User user, String comment, int rating) {
+        reviews.add(new Review(user, comment, rating));
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void showReviews() {
+        if (reviews.isEmpty()) {
+            System.out.println("No reviews available for this game.");
+        } else {
+            for (Review review : reviews) {
+                System.out.println(review);
+            }
+        }
     }
 }
