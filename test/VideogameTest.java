@@ -8,13 +8,13 @@ import java.util.Set;
 class VideogameTest {
 
     Videogame videogame;
-    static final String gameName = "SampleGame";
+    static final String gameName = "TestGame";
     User user;
 
     @BeforeEach
     void setUp() {
         videogame = new Videogame(gameName);
-        user = new User("testUser", "John", "Doe", "john.doe@example.com", LocalDate.of(1990, 1, 1), "password");
+        user = new User("testUser", "Test", "User", "test@test.com", LocalDate.now(), "password123");
     }
 
     @Test
